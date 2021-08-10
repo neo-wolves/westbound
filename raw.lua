@@ -5,6 +5,7 @@ local Tab1 = Top:AddSection('Gun Mods', true)
 local Tab2 = Top:AddSection('Misc', true)
 
 local Mods = nil
+local IYInjected = false
 
 local function SetMods()
 	for _, Gun in pairs(require(game:GetService("ReplicatedStorage").GunScripts.GunStats)) do
@@ -34,5 +35,8 @@ Tab1:AddButton('GunMods', 'Enable', true, function()
 end)
 
 Tab2:AddButton('Open', 'Open Impulse IY', true, function()
-	loadstring(game:HttpGet('http://impulse-hub.xyz/ImpulseHub',true))()
+    if not IYInjected then
+      IYInjected = true
+	    loadstring(game:HttpGet('http://impulse-hub.xyz/ImpulseHub',true))()
+    end
 end)
