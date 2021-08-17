@@ -19,7 +19,7 @@ local function SetMods()
 	end
 end
 
-Tab1:AddButton('GunMods', 'Enable Gun Mods', true, function()
+Tab1:AddButton('GunMods', 'Enable', true, function()
 	Mods = {
 	  FanFire = true, 
 	  camShakeResist = 0, 
@@ -35,11 +35,11 @@ Tab1:AddButton('GunMods', 'Enable Gun Mods', true, function()
 	SetMods()
 end)
 
-Tab1:AddTextLabel('AutoBuyDisclaimer', 'You have to run through the store to buy ammo', true)
-
 Tab1:AddToggle('AutoBuy', 'Auto Buy Ammo', false, function(Value)
 	AutoBuyEnabled = Value
 end)
+
+Tab1:AddTextLabel('AutoBuyDisclaimer', 'You have to run through the store to buy ammo', true)
 
 Tab2:AddButton('Open', 'Open Impulse IY', true, function()
     if not IYInjected then
