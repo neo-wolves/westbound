@@ -36,6 +36,16 @@ MenuFrame.ScrollingFrame.Tutorial.Parent = script
 script.Tutorial.Name = 'Button'
 MenuFrame.Parent = Player.PlayerGui.MenuGui
 
+local GodModeDisplay = Player.PlayerGui.InfoGui.Team:Clone()
+GodModeDisplay.Name = 'GodMode'
+GodModeDisplay.Position = UDim2.fromScale(0.942, 0.88)
+GodModeDisplay.Parent = Player.PlayerGui.MenuGui
+GodModeDisplay.State.Text = 'Not Godded'
+GodModeDisplay.State.Size = UDim2.fromScale(0.847, 1)
+GodModeDisplay.State.Position = UDim2.fromScale(0.074, 0)
+
+print(GodModeDisplay.Parent.Name)
+
 local function SetMods(Mods)
 	for _, Gun in pairs(require(game:GetService("ReplicatedStorage").GunScripts.GunStats)) do
 		for Prop, Value in pairs(Mods) do
@@ -60,10 +70,12 @@ local function CreateButton(ButtonName, FunctionCall)
 					if GodModeEnabled then
 						GodModeEnabled = false
 						Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('[Z] God Mode: Disabled').Title.Text = '[Z] God Mode: Disabled'
+						GodModeDisplay.State.Text = 'Not Godded'
 						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
 					else
 						GodModeEnabled = true
 						Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('[Z] God Mode: Disabled').Title.Text = '[Z] God Mode: Enabled'
+						GodModeDisplay.GodMode.State.Text = 'Godded'
 						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
 						game.Players.LocalPlayer.Character.ForceField.Visible = false
 					end
