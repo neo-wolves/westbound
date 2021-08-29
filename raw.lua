@@ -1,4 +1,5 @@
 local Players = game:GetService('Players')
+local UserInputService = game:GetService('UserInputService')
 local Player = Players.LocalPlayer
 
 local AutoBuyEnabled = false
@@ -44,7 +45,27 @@ local function CreateButton(ButtonName, FunctionCall)
 	ButtonClone.Name = ButtonName
 	ButtonClone.Title.Text = ButtonName
 	
-	ButtonClone.MouseButton1Click:Connect(FunctionCall)
+	
+	if ButtonName == '[Z] God Mode: Disabled' then
+		UserInputService.InputBegan:Connect(function(Input, GameProcessed)
+			if not GameProcessed then
+				if Input.KeyCode == Enum.KeyCode.Z then
+					if GodModeEnabled then
+						GodModeEnabled = false
+						Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('God Mode: Disabled').Title.Text = '[Z] God Mode: Disabled'
+						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
+					else
+						GodModeEnabled = true
+						Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('God Mode: Disabled').Title.Text = '[Z] God Mode: Enabled'
+						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
+						game.Players.LocalPlayer.Character.ForceField.Visible = false
+					end
+				end
+			end
+		end)
+	else
+		ButtonClone.MouseButton1Click:Connect(FunctionCall)
+	end
 end
 
 MenuButton.MouseButton1Click:Connect(function()
@@ -77,17 +98,8 @@ CreateButton('Gun Mods: Disabled', function()
 	Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Gun Mods: Disabled').Title.Text = 'Gun Mods: Enabled'
 end)
 
-CreateButton('God Mode: Disabled', function()
-	if GodModeEnabled then
-		GodModeEnabled = false
-		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('God Mode: Disabled').Title.Text = 'God Mode: Disabled'
-		game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
-	else
-		GodModeEnabled = true
-		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('God Mode: Disabled').Title.Text = 'God Mode: Enabled'
-		game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
-		game.Players.LocalPlayer.Character.ForceField.Visible = false
-	end
+CreateButton('[Z] God Mode: Disabled', function()
+	
 end)
 
 CreateButton('Auto Buy: Disabled', function()
