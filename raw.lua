@@ -129,7 +129,7 @@ end)
 CreateButton('Launch IY', function()
 	if not IYLaunched then
 		IYLaunched = true
-		loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
+		loadstring(game:HttpGet('http://impulse-hub.xyz/ImpulseIY',true))()
 	end
 end)
 
