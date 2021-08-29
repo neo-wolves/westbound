@@ -7,10 +7,17 @@ local GodModeEnabled = false
 local ESPLaunched = false
 local IYLaunched = false
 
-wait(1)
+wait(3)
 
-Player.PlayerGui.MenuButtons.ResetOnSpawn = false
-Player.PlayerGui.MenuGui.ResetOnSpawn = false
+local UIClone1 = Player.PlayerGui.MenuButtons:Clone()
+Player.PlayerGui.MenuButtons:Destroy()
+UIClone1.ResetOnSpawn = false
+UIClone1.Parent = Player.PlayerGui
+
+local UIClone2 = Player.PlayerGui.MenuGui:Clone()
+Player.PlayerGui.MenuGui:Destroy()
+UIClone2.ResetOnSpawn = false
+UIClone2.Parent = Player.PlayerGui
 
 local MenuButton = Player.PlayerGui.MenuButtons.Buttons.CallHorse:Clone()
 MenuButton.Name = 'ModMenu'
@@ -52,11 +59,11 @@ local function CreateButton(ButtonName, FunctionCall)
 				if Input.KeyCode == Enum.KeyCode.Z then
 					if GodModeEnabled then
 						GodModeEnabled = false
-						Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('God Mode: Disabled').Title.Text = '[Z] God Mode: Disabled'
+						Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('[Z] God Mode: Disabled').Title.Text = '[Z] God Mode: Disabled'
 						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
 					else
 						GodModeEnabled = true
-						Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('God Mode: Disabled').Title.Text = '[Z] God Mode: Enabled'
+						Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('[Z] God Mode: Disabled').Title.Text = '[Z] God Mode: Enabled'
 						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
 						game.Players.LocalPlayer.Character.ForceField.Visible = false
 					end
