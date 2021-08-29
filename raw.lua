@@ -75,7 +75,7 @@ local function CreateButton(ButtonName, FunctionCall)
 					else
 						GodModeEnabled = true
 						Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('[Z] God Mode: Disabled').Title.Text = '[Z] God Mode: Enabled'
-						GodModeDisplay.GodMode.State.Text = 'Godded'
+						GodModeDisplay.State.Text = 'Godded'
 						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
 						game.Players.LocalPlayer.Character.ForceField.Visible = false
 					end
