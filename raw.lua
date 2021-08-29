@@ -57,27 +57,17 @@ local function SetMods(Mods)
 end
 
 local function CreateButton(ButtonName, FunctionCall)
-	local ButtonClone = script.Button:Clone()
-	ButtonClone.Parent = MenuFrame.ScrollingFrame
-	ButtonClone.Name = ButtonName
-	ButtonClone.Title.Text = ButtonName
-	
-	
-	if ButtonName == '[Z] God Mode: Disabled' then
+	if ButtonName == 'GodMode' then
 		UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 			if not GameProcessed then
 				if Input.KeyCode == Enum.KeyCode.Z then
 					if GodModeEnabled then
 						GodModeEnabled = false
-						Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('[Z] God Mode: Disabled').Title.Text = '[Z] God Mode: Disabled'
 						GodModeDisplay.State.Text = 'Not Godded'
-						print(GodModeDisplay.State.Text)
 						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
 					else
 						GodModeEnabled = true
-						Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('[Z] God Mode: Disabled').Title.Text = '[Z] God Mode: Enabled'
 						GodModeDisplay.State.Text = 'Godded'
-						print(GodModeDisplay.State.Text)
 						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
 						game.Players.LocalPlayer.Character.ForceField.Visible = false
 					end
@@ -85,6 +75,10 @@ local function CreateButton(ButtonName, FunctionCall)
 			end
 		end)
 	else
+		local ButtonClone = script.Button:Clone()
+		ButtonClone.Parent = MenuFrame.ScrollingFrame
+		ButtonClone.Name = ButtonName
+		ButtonClone.Title.Text = ButtonName
 		ButtonClone.MouseButton1Click:Connect(FunctionCall)
 	end
 end
@@ -119,9 +113,7 @@ CreateButton('Gun Mods: Disabled', function()
 	Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Gun Mods: Disabled').Title.Text = 'Gun Mods: Enabled'
 end)
 
-CreateButton('[Z] God Mode: Disabled', function()
-	
-end)
+CreateButton('GodMode')
 
 CreateButton('Auto Buy: Disabled', function()
 	if AutoBuyEnabled then
