@@ -1,15 +1,34 @@
-local UserInterface = loadstring(game:HttpGet('http://impulse-hub.xyz/library',true))():Init(game:GetService('CoreGui'), 'Impulse Hub')
+local Players = game:GetService('Players')
+local Player = Players.LocalPlayer
 
-local Top = UserInterface:AddTab('Neo-Wolves')
-local Tab1 = Top:AddSection('Gun Settings', true)
-local Tab2 = Top:AddSection('Misc', true)
-
-local Mods = nil
-local IYInjected = false
-local ESPInjected = false
 local AutoBuyEnabled = false
+local GodModeEnabled = false
+local ESPLaunched = false
+local IYLaunched = false
 
-local function SetMods()
+wait(1)
+
+Player.PlayerGui.MenuButtons.ResetOnSpawn = false
+Player.PlayerGui.MenuGui.ResetOnSpawn = false
+
+local MenuButton = Player.PlayerGui.MenuButtons.Buttons.CallHorse:Clone()
+MenuButton.Name = 'ModMenu'
+MenuButton.ImageColor3 = Color3.fromRGB(117, 117, 117)
+MenuButton.Title.Text = 'Mod Menu'
+MenuButton.Parent = Player.PlayerGui.MenuButtons.Buttons
+
+local MenuFrame = Player.PlayerGui.MenuGui.Menu:Clone()
+MenuFrame.Name = 'ModMenu'
+MenuFrame.MenuTip:Destroy()
+MenuFrame.Title.TextLabel.Text = 'Mod Menu'
+MenuFrame.ScrollingFrame.Settings:Destroy()
+MenuFrame.ScrollingFrame.Map:Destroy()
+MenuFrame.ScrollingFrame.BecomeOutlaw:Destroy()
+MenuFrame.ScrollingFrame.Tutorial.Parent = script
+script.Tutorial.Name = 'Button'
+MenuFrame.Parent = Player.PlayerGui.MenuGui
+
+local function SetMods(Mods)
 	for _, Gun in pairs(require(game:GetService("ReplicatedStorage").GunScripts.GunStats)) do
 		for Prop, Value in pairs(Mods) do
 			if Gun[Prop] then
@@ -19,43 +38,83 @@ local function SetMods()
 	end
 end
 
-Tab1:AddButton('GunMods', 'Enable', true, function()
-	Mods = {
-	  FanFire = true, 
-	  camShakeResist = 0, 
-	  Spread = 0, 
-	  prepTime = 0, 
-	  equipTime = 0, 
-	  ReloadAnimationSpeed = 0,
-	  ReloadSpeed = 0, 
-	  HipFireAccuracy = 0, 
-	  ZoomAccuracy = 0, 
-	  InstantFireAnimation = true
+local function CreateButton(ButtonName, FunctionCall)
+	local ButtonClone = script.Button:Clone()
+	ButtonClone.Parent = MenuFrame.ScrollingFrame
+	ButtonClone.Name = ButtonName
+	ButtonClone.Title.Text = ButtonName
+	
+	ButtonClone.MouseButton1Click:Connect(FunctionCall)
+end
+
+MenuButton.MouseButton1Click:Connect(function()
+	if MenuFrame.Visible then
+		MenuFrame.Visible = false
+	else
+		MenuFrame.Visible = true
+	end
+end)
+
+MenuFrame.Close.MouseButton1Click:Connect(function()
+	MenuFrame.Visible = false
+end)
+
+CreateButton('Gun Mods: Disabled', function()
+	local Mods = {
+		FanFire = true, 
+		camShakeResist = 0, 
+		Spread = 0, 
+		prepTime = 0, 
+		equipTime = 0, 
+		ReloadAnimationSpeed = 0,
+		ReloadSpeed = 0, 
+		HipFireAccuracy = 0, 
+		ZoomAccuracy = 0, 
+		InstantFireAnimation = true
 	}
-	SetMods()
+	SetMods(Mods)
+	
+	Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Gun Mods: Disabled').Title.Text = 'Gun Mods: Enabled'
 end)
 
-Tab1:AddToggle('AutoBuy', 'Auto Buy Ammo', false, function(Value)
-	AutoBuyEnabled = Value
+CreateButton('God Mode: Disabled', function()
+	if GodModeEnabled then
+		GodModeEnabled = false
+		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('God Mode: Disabled').Title.Text = 'God Mode: Disabled'
+		game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
+	else
+		GodModeEnabled = true
+		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('God Mode: Disabled').Title.Text = 'God Mode: Enabled'
+		game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
+		game.Players.LocalPlayer.Character.ForceField.Visible = false
+	end
 end)
 
-Tab1:AddTextLabel('AutoBuyDisclaimer', 'You have to run through the store to buy ammo', true)
-
-Tab2:AddButton('Open', 'Open Impulse IY', true, function()
-    if not IYInjected then
-    	IYInjected = true
-	loadstring(game:HttpGet('http://impulse-hub.xyz/ImpulseHub',true))()
-    end
+CreateButton('Auto Buy: Disabled', function()
+	if AutoBuyEnabled then
+		AutoBuyEnabled = false
+		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Auto Buy: Disabled').Title.Text = 'Auto Buy: Disabled'
+	else
+		AutoBuyEnabled = true
+		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Auto Buy: Disabled').Title.Text = 'Auto Buy: Enabled'
+	end
 end)
 
-Tab2:AddButton('OpenESP', 'Open ESP', true, function()
-    if not ESPInjected then
-    	ESPInjected = true
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
-    end
+CreateButton('Launch ESP', function()
+	if not ESPLaunched then
+		ESPLaunched = true
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
+	end
 end)
 
-while wait(0.5) do
+CreateButton('Launch IY', function()
+	if not IYLaunched then
+		IYLaunched = true
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
+	end
+end)
+
+while wait(0.1) do
 	if AutoBuyEnabled then
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("PistolAmmo",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("RifleAmmo",true)
