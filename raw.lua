@@ -159,6 +159,10 @@ CreateButton('Launch IY', function()
 	end
 end)
 
+CreateButton('Remote Spy (Debug Only)', function()
+	loadstring(game:HttpGet("https://pastebin.com/raw/BDhSQqUU", true))()
+end)
+
 while wait(0.1) do
 	if AutoBuyEnabled then
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("PistolAmmo",true)
@@ -167,5 +171,8 @@ while wait(0.1) do
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Dynamite",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("SniperAmmo",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
+		
 	end
+	
+	
 end
