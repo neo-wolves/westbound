@@ -42,6 +42,8 @@ GodModeDisplay.State.Text = 'Not Godded'
 GodModeDisplay.State.Size = UDim2.fromScale(0.847, 1)
 GodModeDisplay.State.Position = UDim2.fromScale(0.074, 0)
 
+game.Players.LocalPlayer.Character.Head.NameTag:Destroy()
+
 Player.CharacterAdded:Connect(function()
 	wait(0.5)
 	
@@ -59,9 +61,7 @@ Player.CharacterAdded:Connect(function()
 		end
 	end
 		
-	wait(4)
-		
-	
+	game.Players.LocalPlayer.Character.Head.NameTag:Destroy()
 end)
 
 local function SetMods(Mods)
