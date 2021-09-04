@@ -67,41 +67,55 @@ local function SetMods(Mods)
 end
 
 local function CreateButton(ButtonName, FunctionCall)
-	if ButtonName == 'GodMode' then
-		UserInputService.InputBegan:Connect(function(Input, GameProcessed)
-			if not GameProcessed then
-				if Input.KeyCode == Enum.KeyCode.Z then
-					if GodModeEnabled then
-						GodModeEnabled = false
-						GodModeDisplay.State.Text = 'Not Godded'
-						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
-					else
-						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
-						
-						if game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
-							GodModeEnabled = true
-							GodModeDisplay.State.Text = 'Godded'
+	local ButtonClone = script.Button:Clone()
+	ButtonClone.Parent = MenuFrame.ScrollingFrame
+	ButtonClone.Name = ButtonName
+	ButtonClone.Title.Text = ButtonName
+	ButtonClone.MouseButton1Click:Connect(FunctionCall)
+end
 
-							game.Players.LocalPlayer.Character.ForceField.Visible = false
-						else
-							GodModeDisplay.State.Text = 'No Shop Nearby'
+UserInputService.InputBegan:Connect(function(Input, GameProcessed)
+	if not GameProcessed then
+		if Input.KeyCode == Enum.KeyCode.Z then
+			if GodModeEnabled then
+				GodModeEnabled = false
+				GodModeDisplay.State.Text = 'Not Godded'
+				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
+			else
+				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
 
-							wait(1.5)
+				if game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
+					GodModeEnabled = true
+					GodModeDisplay.State.Text = 'Godded'
 
-							GodModeDisplay.State.Text = 'Not Godded'
-						end
-					end
+					game.Players.LocalPlayer.Character.ForceField.Visible = false
+				else
+					GodModeDisplay.State.Text = 'No Shop Nearby'
+
+					wait(1.5)
+
+					GodModeDisplay.State.Text = 'Not Godded'
 				end
 			end
-		end)
-	else
-		local ButtonClone = script.Button:Clone()
-		ButtonClone.Parent = MenuFrame.ScrollingFrame
-		ButtonClone.Name = ButtonName
-		ButtonClone.Title.Text = ButtonName
-		ButtonClone.MouseButton1Click:Connect(FunctionCall)
+		end
 	end
-end
+end)
+
+UserInputService.InputBegan:Connect(function(Input, GameProcessed)
+	if not GameProcessed then
+		if Input.KeyCode == Enum.KeyCode.C then
+			if Player.Backpack:FindFirstChild('Health Potion') then
+				game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
+					
+			else
+				local SavedText = GodModeDisplay.State.Text
+				GodModeDisplay.State.Text = 'No Potions'
+				wait(1.5)
+				GodModeDisplay.State.Text = SavedText
+			end
+		end
+	end
+end)
 
 MenuButton.MouseButton1Click:Connect(function()
 	if MenuFrame.Visible then
@@ -171,8 +185,6 @@ while wait(0.1) do
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Dynamite",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("SniperAmmo",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
-		
+		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Health Potion",true)
 	end
-	
-	
 end
