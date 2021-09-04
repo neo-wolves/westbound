@@ -152,7 +152,7 @@ end)
 
 CreateButton('Auto Heal: Disabled', function()
 	if AutoHealEnabled then
-		AutoBuyEnabled = false
+		AutoHealEnabled = false
 		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Auto Heal: Disabled').Title.Text = 'Auto Heal: Disabled'
 	else
 		AutoHealEnabled = true
