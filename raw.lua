@@ -191,7 +191,7 @@ while wait(0.25) do
 	end
 		
 	if AutoHealEnabled then
-		if game.Players.LocalPlayer.Character.Humanoid.Health <= 5 then
+		if game.Players.LocalPlayer.Character.Humanoid.Health <= 30 then
 			game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
 		end
 	end
