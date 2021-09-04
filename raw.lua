@@ -195,5 +195,6 @@ while wait(0.1) do
 	else	
 		GodModeEnabled = false
 		GodModeDisplay.State.Text = 'Not Godded'
+		game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
 	end
 end
