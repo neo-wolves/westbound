@@ -5,8 +5,7 @@ local Player = Players.LocalPlayer
 local AutoBuyEnabled = false
 local GodModeEnabled = false
 local AutoHealEnabled = false
-local ESPLaunched = false
-local IYLaunched = false
+local AddonsLaunched = false
 
 local UIClone1 = Player.PlayerGui.MenuButtons:Clone()
 Player.PlayerGui.MenuButtons:Destroy()
@@ -160,16 +159,10 @@ CreateButton('Auto Heal: Disabled', function()
 	end
 end)
 
-CreateButton('Launch ESP', function()
-	if not ESPLaunched then
-		ESPLaunched = true
+CreateButton('Enable ESP & FE Admin', function()
+	if not AddonsLaunched then
+		AddonsLaunched = true
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
-	end
-end)
-
-CreateButton('Launch IY', function()
-	if not IYLaunched then
-		IYLaunched = true
 		loadstring(game:HttpGet('http://impulse-hub.xyz/ImpulseIY',true))()
 	end
 end)
