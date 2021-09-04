@@ -45,7 +45,7 @@ GodModeDisplay.State.Position = UDim2.fromScale(0.074, 0)
 Player.CharacterAdded:Connect(function()
 	GodModeEnabled = false
 	GodModeDisplay.State.Text = 'Not Godded'
-		
+
 	for _,Tool in pairs(Player.Backpack:GetChildren()) do
 		if Tool:IsA('Tool') then
 			Tool.Equipped:Connect(function()
@@ -76,10 +76,20 @@ local function CreateButton(ButtonName, FunctionCall)
 						GodModeDisplay.State.Text = 'Not Godded'
 						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
 					else
-						GodModeEnabled = true
-						GodModeDisplay.State.Text = 'Godded'
 						game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
-						game.Players.LocalPlayer.Character.ForceField.Visible = false
+						
+						if game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
+							GodModeEnabled = true
+							GodModeDisplay.State.Text = 'Godded'
+
+							game.Players.LocalPlayer.Character.ForceField.Visible = false
+						else
+							GodModeDisplay.State.Text = 'No Shop Nearby'
+
+							wait(1.5)
+
+							GodModeDisplay.State.Text = 'Not Godded'
+						end
 					end
 				end
 			end
@@ -119,7 +129,7 @@ CreateButton('Gun Mods: Disabled', function()
 		InstantFireAnimation = true
 	}
 	SetMods(Mods)
-	
+
 	Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Gun Mods: Disabled').Title.Text = 'Gun Mods: Enabled'
 end)
 
