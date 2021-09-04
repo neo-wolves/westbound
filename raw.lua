@@ -4,6 +4,7 @@ local Player = Players.LocalPlayer
 
 local AutoBuyEnabled = false
 local GodModeEnabled = false
+local AutoHealEnabled = false
 local ESPLaunched = false
 local IYLaunched = false
 
@@ -109,21 +110,6 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 	end
 end)
 
-UserInputService.InputBegan:Connect(function(Input, GameProcessed)
-	if not GameProcessed then
-		if Input.KeyCode == Enum.KeyCode.V then
-			if Player.Backpack:FindFirstChild('Health Potion') then
-				game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
-			else
-				local SavedText = GodModeDisplay.State.Text
-				GodModeDisplay.State.Text = 'No Potions'
-				wait(1.5)
-				GodModeDisplay.State.Text = SavedText
-			end
-		end
-	end
-end)
-
 MenuButton.MouseButton1Click:Connect(function()
 	if MenuFrame.Visible then
 		MenuFrame.Visible = false
@@ -164,6 +150,16 @@ CreateButton('Auto Buy/ Sell: Disabled', function()
 	end
 end)
 
+CreateButton('Auto Heal: Disabled', function()
+	if AutoHealEnabled then
+		AutoBuyEnabled = false
+		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Auto Heal: Disabled').Title.Text = 'Auto Heal: Disabled'
+	else
+		AutoHealEnabled = true
+		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Auto Heal: Disabled').Title.Text = 'Auto Heal: Enabled'
+	end
+end)
+
 CreateButton('Launch ESP', function()
 	if not ESPLaunched then
 		ESPLaunched = true
@@ -182,7 +178,7 @@ CreateButton('Remote Spy (Debug Only)', function()
 	loadstring(game:HttpGet("https://pastebin.com/raw/BDhSQqUU", true))()
 end) 
 
-while wait(0.1) do
+while wait(0.25) do
 	if AutoBuyEnabled then
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("PistolAmmo",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("RifleAmmo",true)
@@ -192,5 +188,11 @@ while wait(0.1) do
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Health Potion",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.Inventory:InvokeServer("Sell")
+	end
+		
+	if AutoHealEnabled then
+		if game.Players.LocalPlayer.Character.Humanoid.Health <= 5 then
+			game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
+		end
 	end
 end
