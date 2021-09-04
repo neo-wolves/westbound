@@ -147,8 +147,6 @@ CreateButton('Gun Mods: Disabled', function()
 	Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Gun Mods: Disabled').Title.Text = 'Gun Mods: Enabled'
 end)
 
-CreateButton('GodMode')
-
 CreateButton('Auto Buy: Disabled', function()
 	if AutoBuyEnabled then
 		AutoBuyEnabled = false
