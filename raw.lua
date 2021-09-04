@@ -46,7 +46,6 @@ Player.CharacterAdded:Connect(function()
 	wait(0.5)
 	
 	game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
-	Player.Character.Head.NameTag:Destroy()
 		
 	GodModeEnabled = false
 	GodModeDisplay.State.Text = 'Not Godded'
@@ -59,6 +58,10 @@ Player.CharacterAdded:Connect(function()
 			end)
 		end
 	end
+		
+	wait(4)
+		
+	game.Players.LocalPlayer.Character.Head.NameTag:Destroy()
 end)
 
 local function SetMods(Mods)
