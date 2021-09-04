@@ -54,6 +54,8 @@ Player.CharacterAdded:Connect(function()
 			end)
 		end
 	end
+		
+	Player.Character.Head.NameTag:Destroy()
 end)
 
 local function SetMods(Mods)
@@ -103,10 +105,9 @@ end)
 
 UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 	if not GameProcessed then
-		if Input.KeyCode == Enum.KeyCode.C then
+		if Input.KeyCode == Enum.KeyCode.V then
 			if Player.Backpack:FindFirstChild('Health Potion') then
 				game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
-					
 			else
 				local SavedText = GodModeDisplay.State.Text
 				GodModeDisplay.State.Text = 'No Potions'
@@ -184,5 +185,15 @@ while wait(0.1) do
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("SniperAmmo",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Health Potion",true)
+	end
+	
+	if game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
+		GodModeEnabled = true
+		GodModeDisplay.State.Text = 'Godded'
+
+		game.Players.LocalPlayer.Character.ForceField.Visible = false
+	else	
+		GodModeEnabled = false
+		GodModeDisplay.State.Text = 'Not Godded'
 	end
 end
