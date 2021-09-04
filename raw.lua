@@ -176,7 +176,7 @@ CreateButton('Remote Spy (Debug Only)', function()
 	loadstring(game:HttpGet("https://pastebin.com/raw/BDhSQqUU", true))()
 end)
 
-while wait(0.1) do
+while wait(0.4) do
 	if AutoBuyEnabled then
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("PistolAmmo",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("RifleAmmo",true)
