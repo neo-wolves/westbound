@@ -148,13 +148,13 @@ CreateButton('Gun Mods: Disabled', function()
 	Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Gun Mods: Disabled').Title.Text = 'Gun Mods: Enabled'
 end)
 
-CreateButton('Auto Buy: Disabled', function()
+CreateButton('Auto Buy/ Sell: Disabled', function()
 	if AutoBuyEnabled then
 		AutoBuyEnabled = false
-		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Auto Buy: Disabled').Title.Text = 'Auto Buy: Disabled'
+		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Auto Buy/ Sell: Disabled').Title.Text = 'Auto Buy/ Sell: Disabled'
 	else
 		AutoBuyEnabled = true
-		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Auto Buy: Disabled').Title.Text = 'Auto Buy: Enabled'
+		Player.PlayerGui.MenuGui.ModMenu.ScrollingFrame:FindFirstChild('Auto Buy/ Sell: Disabled').Title.Text = 'Auto Buy/ Sell: Enabled'
 	end
 end)
 
@@ -174,9 +174,9 @@ end)
 
 CreateButton('Remote Spy (Debug Only)', function()
 	loadstring(game:HttpGet("https://pastebin.com/raw/BDhSQqUU", true))()
-end)
+end) 
 
-while wait(0.4) do
+while wait(0.1) do
 	if AutoBuyEnabled then
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("PistolAmmo",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("RifleAmmo",true)
@@ -185,16 +185,6 @@ while wait(0.4) do
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("SniperAmmo",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
 		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Health Potion",true)
-	end
-	
-	if game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
-		GodModeEnabled = true
-		GodModeDisplay.State.Text = 'Godded'
-
-		game.Players.LocalPlayer.Character.ForceField.Visible = false
-	else	
-		GodModeEnabled = false
-		GodModeDisplay.State.Text = 'Not Godded'
-		game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
+		game:GetService("ReplicatedStorage").GeneralEvents.Inventory:InvokeServer("Sell")
 	end
 end
