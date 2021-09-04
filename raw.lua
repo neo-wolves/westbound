@@ -61,7 +61,7 @@ Player.CharacterAdded:Connect(function()
 		
 	wait(4)
 		
-	game.Players.LocalPlayer.Character.Head.NameTag:Destroy()
+	
 end)
 
 local function SetMods(Mods)
