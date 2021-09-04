@@ -7,8 +7,6 @@ local GodModeEnabled = false
 local ESPLaunched = false
 local IYLaunched = false
 
-wait(3)
-
 local UIClone1 = Player.PlayerGui.MenuButtons:Clone()
 Player.PlayerGui.MenuButtons:Destroy()
 UIClone1.ResetOnSpawn = false
@@ -53,7 +51,7 @@ Player.CharacterAdded:Connect(function()
 			Tool.Equipped:Connect(function()
 				GodModeEnabled = false
 				GodModeDisplay.State.Text = 'Not Godded'
-			end
+			end)
 		end
 	end
 end)
