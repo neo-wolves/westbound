@@ -44,7 +44,19 @@ GodModeDisplay.State.Text = 'Not Godded'
 GodModeDisplay.State.Size = UDim2.fromScale(0.847, 1)
 GodModeDisplay.State.Position = UDim2.fromScale(0.074, 0)
 
-
+Player.CharacterAdded:Connect(function()
+	GodModeEnabled = false
+	GodModeDisplay.State.Text = 'Not Godded'
+		
+	for _,Tool in pairs(Player.Backpack:GetChildren()) do
+		if Tool:IsA('Tool') then
+			Tool.Equipped:Connect(function()
+				GodModeEnabled = false
+				GodModeDisplay.State.Text = 'Not Godded'
+			end
+		end
+	end
+end)
 
 local function SetMods(Mods)
 	for _, Gun in pairs(require(game:GetService("ReplicatedStorage").GunScripts.GunStats)) do
