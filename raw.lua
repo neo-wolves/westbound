@@ -6,6 +6,7 @@ local AutoBuyEnabled = false
 local GodModeEnabled = false
 local AutoHealEnabled = false
 local AddonsLaunched = false
+local CurrentShop = ''
 
 local UIClone1 = Player.PlayerGui.MenuButtons:Clone()
 Player.PlayerGui.MenuButtons:Destroy()
@@ -172,20 +173,50 @@ CreateButton('Remote Spy (Debug Only)', function()
 end) 
 
 while wait(0.25) do
-	if AutoBuyEnabled then
-		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("PistolAmmo",true)
-		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("RifleAmmo",true)
-		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("ShotgunAmmo",true)
-		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Dynamite",true)
-		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("SniperAmmo",true)
-		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
-		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Health Potion",true)
-		game:GetService("ReplicatedStorage").GeneralEvents.Inventory:InvokeServer("Sell")
-	end
+	local HRP = Player.Character:FindFirstChild('HumanoidRootPart')
+	
+	for _,Shop in pairs(workspace.Shops:GetChildren()) do
+		local Magnitude = (HRP.Position - Shop.HumanoidRootPart.Position).Magnitude
 		
-	if AutoHealEnabled then
-		if game.Players.LocalPlayer.Character.Humanoid.Health <= 30 then
-			game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
+		if Magnitude <= 10 then
+			print('Near shop')
 		end
 	end
+end
+
+while wait(0.15) do
+	if AutoBuyEnabled then
+	    for _,Shop in pairs(workspace.Shops:GetChildren()) do
+    		local Magnitude = (Shop.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).Magnitude
+    		
+    		if CurrentShop ~= Shop.Name and Magnitude <= 15 then
+    			CurrentShop = Shop.Name
+    			
+    			game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("PistolAmmo",true)
+        		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("RifleAmmo",true)
+        		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("ShotgunAmmo",true)
+        		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Dynamite",true)
+        		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("SniperAmmo",true)
+        		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
+        		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Health Potion",true)
+        		game:GetService("ReplicatedStorage").GeneralEvents.Inventory:InvokeServer("Sell")
+    			
+    			break
+    		elseif CurrentShop == Shop.Name and Magnitude > 15 then
+    		    CurrentShop = ''
+    		    
+    		    break
+    		end
+    	    end
+	end
+	
+	if AutoHealEnabled then
+	    local Character = workspace:FindFirstChild(Player.Name)
+    
+        if Character then
+            if Character.Humanoid.Health <= 35 and Character.Humanoid.Health > 0 then
+                game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
+            end
+        end
+    end
 end
