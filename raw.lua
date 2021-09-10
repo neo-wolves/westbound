@@ -172,18 +172,6 @@ CreateButton('Remote Spy (Debug Only)', function()
 	loadstring(game:HttpGet("https://pastebin.com/raw/BDhSQqUU", true))()
 end) 
 
-while wait(0.25) do
-	local HRP = Player.Character:FindFirstChild('HumanoidRootPart')
-	
-	for _,Shop in pairs(workspace.Shops:GetChildren()) do
-		local Magnitude = (HRP.Position - Shop.HumanoidRootPart.Position).Magnitude
-		
-		if Magnitude <= 10 then
-			print('Near shop')
-		end
-	end
-end
-
 while wait(0.15) do
 	if AutoBuyEnabled then
 	    for _,Shop in pairs(workspace.Shops:GetChildren()) do
