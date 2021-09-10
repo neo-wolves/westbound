@@ -207,9 +207,3 @@ local function StartLoop()
 		end
 	end
 end
-
-Player.CharacterAdded:Connect(function()
-	StartLoop()
-end
-	
-StartLoop()
