@@ -188,12 +188,8 @@ while wait(0.15) do
         		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
         		game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Health Potion",true)
         		game:GetService("ReplicatedStorage").GeneralEvents.Inventory:InvokeServer("Sell")
-    			
-    			break
     		elseif CurrentShop == Shop.Name and Magnitude > 15 then
     		    CurrentShop = ''
-    		    
-    		    break
     		end
     	    end
 	end
@@ -201,10 +197,10 @@ while wait(0.15) do
 	if AutoHealEnabled then
 	    local Character = workspace:FindFirstChild(Player.Name)
     
-        if Character then
-            if Character.Humanoid.Health <= 35 and Character.Humanoid.Health > 0 then
-                game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
-            end
-        end
-    end
+        	if Character then
+            		if Character.Humanoid.Health <= 35 and Character.Humanoid.Health > 0 then
+                		game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
+            		end
+        	end
+    	end
 end
