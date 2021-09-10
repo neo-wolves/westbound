@@ -174,6 +174,8 @@ end)
 
 while wait(0.15) do
 	if AutoBuyEnabled then
+	print(CurrentShop)
+		
 	    for _,Shop in pairs(workspace.Shops:GetChildren()) do
     		local Magnitude = (Shop.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).Magnitude
     		
