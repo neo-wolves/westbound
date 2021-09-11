@@ -20,6 +20,7 @@ UILibrary.AddButton(Menu[1], 'Launch ESP/ Admin', 'Launch')
 local Buttons = {}
 
 for _,Frame in pairs(Menu[2]:GetChildren()) do
+	print('Test', Frame)
 	if Frame:IsA('Frame') then
 		Buttons[Frame.TextLabel.Text] = Frame.ImageButton
 	end
