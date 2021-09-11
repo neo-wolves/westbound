@@ -12,11 +12,12 @@ local CurrentShop = ''
 -- Create UI Elements
 local UILibrary = loadstring(game:HttpGet('https://raw.githubusercontent.com/neo-wolves/westbound/main/library.lua',true))()
 local Menu = UILibrary.AddMenu()
+print('here1')
 UILibrary.AddButton(Menu[1], 'Gun Mods', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Auto Buy/ Sell', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Auto Heal', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Launch ESP/ Admin', 'Launch')
-
+print('here2')
 local Buttons = {}
 
 for _,Frame in pairs(Menu[1]:GetChildren()) do
