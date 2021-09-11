@@ -1,4 +1,5 @@
 local module = {}
+
 local Player = game.Players.LocalPlayer
 
 module.AddMenu = function()
@@ -20,6 +21,31 @@ module.AddMenu = function()
 	MainFrame.Draggable = true
 	MainFrame.Active = true
 	MainFrame.Selectable = true
+	
+	-- Create GodFrame for Menu
+	local GodFrame = Instance.new('ImageLabel', MainFrame)
+	GodFrame.BackgroundTransparency = 1
+	GodFrame.Position = UDim2.fromScale(0, 1.029)
+	GodFrame.Size = UDim2.fromScale(1, 0.195)
+	GodFrame.Image = 'rbxassetid://4989051704'
+	GodFrame.ImageColor3 = Color3.fromRGB(255, 191, 139)
+	GodFrame.ImageTransparency = 0.3
+	GodFrame.ScaleType = Enum.ScaleType.Slice
+	GodFrame.SliceCenter = Rect.new(41, 41, 50, 60)
+	GodFrame.SliceScale = 0.4
+	
+	-- Create Text for GodFrame
+	local GodText = Instance.new('TextLabel', GodFrame)
+	GodText.BackgroundTransparency = 1
+	GodText.Position = UDim2.fromScale(0.1, 0.168)
+	GodText.Size = UDim2.fromScale(0.796, 0.649)
+	GodText.Font = Enum.Font.SourceSansItalic
+	GodText.TextColor3 = Color3.fromRGB(255, 191, 139)
+	GodText.TextScaled = true
+	GodText.TextStrokeTransparency = 0
+	GodText.TextWrapped = true
+	GodText.Text = 'Ungodded'
+	GodText.ZIndex = 3
 	
 	-- Create Title for Frame
 	local Title = Instance.new('ImageLabel', MainFrame)
@@ -60,7 +86,7 @@ module.AddMenu = function()
 	Layout.CellPadding = UDim2.fromOffset(5, 10)
 	Layout.CellSize = UDim2.fromScale(0.98, 0.11)
 	
-	return(ScrollFrame)
+	return({ScrollFrame, GodText})
 end
 
 module.AddButton = function(Menu, Title, ButtonTitle)
