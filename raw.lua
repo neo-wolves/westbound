@@ -169,3 +169,5 @@ Buttons['Launch ESP/ Admin'].MouseButton1Click:Connect(function()
 		Buttons['Launch ESP/ Admin'].TextLabel.Text = 'Launched'
     	end
 end)
+
+StartLoop()
