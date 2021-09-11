@@ -151,7 +151,7 @@ Buttons['Auto Buy/ Sell'].MouseButton1Click:Connect(function()
 end)
 		
 Buttons['Auto Heal'].MouseButton1Click:Connect(function()
-	if AutoBuyEnabled then
+	if AutoHealEnabled then
 		AutoHealEnabled = false
 		Buttons['Auto Heal'].TextLabel.Text = 'Disabled'
     	else
