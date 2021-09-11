@@ -21,6 +21,9 @@ local Buttons = {}
 
 for _,Frame in pairs(Menu[1]:GetChildren()) do
 	print(Frame)
+	if Frame:IsA('Frame') then
+		Buttons[Frame.TextLabel.Text] = Frame.ImageButton
+	end
 end
 
 -- Global Functions
