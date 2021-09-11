@@ -16,6 +16,7 @@ UILibrary.AddButton(Menu[1], 'Gun Mods', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Auto Buy/ Sell', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Auto Heal', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Launch ESP/ Admin', 'Launch')
+UILibrary.AddButton(Menu[1], 'Instant Outlaw', 'Switch')
 local Buttons = {}
 
 for _,Frame in pairs(Menu[1]:GetChildren()) do
@@ -59,6 +60,16 @@ local function StartLoop()
 				end
 			end
 		end
+	end
+end
+
+local function BreakWindow()
+	for _,Window in pairs(game.ReplicatedStorage.ContextStreaming:GetChildren()) do
+    		if Window.Name == 'Window' and game.Players.LocalPlayer.TeamColor ~= BrickColor.New('Bright red') then
+        		if Window.Part.Transparency == 0.5 then
+            			game:GetService("ReplicatedStorage").GeneralEvents.WindowBreak:FireServer(Window)
+        		end
+    		end
 	end
 end
 
@@ -168,6 +179,13 @@ Buttons['Launch ESP/ Admin'].MouseButton1Click:Connect(function()
 
 		Buttons['Launch ESP/ Admin'].TextLabel.Text = 'Launched'
     	end
+end)
+
+Button['Instant Outlaw'].MouseButton1Click:Connect(function()
+	BreakWindow()
+	BreakWindow()
+	BreakWindow()
+	BreakWindow()
 end)
 
 StartLoop()
