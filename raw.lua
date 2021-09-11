@@ -1,4 +1,3 @@
-print('running')
 -- Variables
 local Players = game:GetService('Players')
 local UserInputService = game:GetService('UserInputService')
@@ -13,12 +12,10 @@ local CurrentShop = ''
 -- Create UI Elements
 local UILibrary = loadstring(game:HttpGet('https://raw.githubusercontent.com/neo-wolves/westbound/main/library.lua',true))()
 local Menu = UILibrary.AddMenu()
-print('here1')
 UILibrary.AddButton(Menu[1], 'Gun Mods', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Auto Buy/ Sell', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Auto Heal', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Launch ESP/ Admin', 'Launch')
-print('here2')
 local Buttons = {}
 
 for _,Frame in pairs(Menu[1]:GetChildren()) do
@@ -125,5 +122,50 @@ end)
 
 -- Element Functions
 Buttons['Gun Mods'].MouseButton1Click:Connect(function()
-	print('Clicked')
-end
+	local Mods = {
+		FanFire = true, 
+		camShakeResist = 0, 
+		Spread = 0, 
+		prepTime = 0, 
+		equipTime = 0, 
+		ReloadAnimationSpeed = 0,
+		ReloadSpeed = 0, 
+		HipFireAccuracy = 0, 
+		ZoomAccuracy = 0, 
+		InstantFireAnimation = true
+    	}
+    
+    	SetMods(Mods)
+    
+    	Buttons['Gun Mods'].TextLabel.Text = 'Enabled'
+end)
+
+Buttons['Auto Buy/ Sell'].MouseButton1Click:Connect(function()
+	if AutoBuyEnabled then
+		AutoBuyEnabled = false
+		Buttons['Auto Buy/ Sell'].TextLabel.Text = 'Disabled'
+    	else
+		AutoBuyEnabled = true
+		Buttons['Auto Buy/ Sell'].TextLabel.Text = 'Enabled'
+    	end	
+end)
+		
+Buttons['Auto Heal'].MouseButton1Click:Connect(function()
+	if AutoBuyEnabled then
+		AutoHealEnabled = false
+		Buttons['Auto Heal'].TextLabel.Text = 'Disabled'
+    	else
+		AutoHealEnabled = true
+		Buttons['Auto Heal'].TextLabel.Text = 'Enabled'
+    	end			
+end)
+
+Buttons['Launch ESP/ Admin'].MouseButton1Click:Connect(function()
+	if not AddonsLaunched then
+		AddonsLaunched = true
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
+		loadstring(game:HttpGet('http://impulse-hub.xyz/ImpulseIY',true))()
+
+		Buttons['Launch ESP/ Admin'].TextLabel.Text = 'Launched'
+    	end
+end)
