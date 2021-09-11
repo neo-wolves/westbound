@@ -12,10 +12,18 @@ local CurrentShop = ''
 -- Create UI Elements
 local UILibrary = loadstring(game:HttpGet('https://raw.githubusercontent.com/neo-wolves/westbound/main/library.lua',true))()
 local Menu = UILibrary.AddMenu()
-local GunMods = UILibrary.AddButton(Menu[1], 'Gun Mods', 'Disabled')
-local AutoBuySell = UILibrary.AddButton(Menu[1], 'Auto Buy/ Sell', 'Disabled')
-local AutoHeal = UILibrary.AddButton(Menu[1], 'Auto Heal', 'Disabled')
-local ESPAdmin = UILibrary.AddButton(Menu[1], 'Launch ESP/ Admin', 'Launch')
+UILibrary.AddButton(Menu[1], 'Gun Mods', 'Disabled')
+UILibrary.AddButton(Menu[1], 'Auto Buy/ Sell', 'Disabled')
+UILibrary.AddButton(Menu[1], 'Auto Heal', 'Disabled')
+UILibrary.AddButton(Menu[1], 'Launch ESP/ Admin', 'Launch')
+
+local Buttons = {}
+
+for _,Frame in pairs(Menu[2]:GetChildren()) do
+	if Frame:IsA('Frame') then
+		Buttons[Frame.TextLabel.Text] = Frame.ImageButton
+	end
+end
 
 -- Global Functions
 local function StartLoop()
@@ -113,6 +121,6 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 end)
 
 -- Element Functions
-GunMods.MouseButton1Click:Connect(function()
-	print('Clicked')	
+Buttons['Gun Mods'].MouseButton1Click:Connect(function()
+	print('Clicked')
 end
