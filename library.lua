@@ -136,8 +136,6 @@ module.AddButton = function(Menu, Title, ButtonTitle)
 	ButtonTitleText.TextWrapped = true
 	ButtonTitleText.Text = ButtonTitle
 	ButtonTitleText.ZIndex = 3
-	
-	return(Button)
 end
 
 return module
