@@ -113,55 +113,6 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 end)
 
 -- Element Functions
--- Gun Mods
 GunMods.MouseButton1Click:Connect(function()
-	local Mods = {
-		FanFire = true, 
-		camShakeResist = 0, 
-		Spread = 0, 
-		prepTime = 0, 
-		equipTime = 0, 
-		ReloadAnimationSpeed = 0,
-		ReloadSpeed = 0, 
-		HipFireAccuracy = 0, 
-		ZoomAccuracy = 0, 
-		InstantFireAnimation = true
-	}
-	
-	SetMods(Mods)
-	
-	GunMods.TextLabel.Text = 'Enabled'
-end)
-
--- Auto Buy/ Sell
-AutoBuySell.MouseButton1Click:Connect(function()
-	if AutoBuyEnabled then
-		AutoBuyEnabled = false
-		AutoBuySell.TextLabel.Text = 'Disabled'
-	else
-		AutoBuyEnabled = true
-		AutoBuySell.TextLabel.Text = 'Enabled'
-	end
-end)
-
--- Auto Heal
-AutoHeal.MouseButton1Click:Connect(function()
-	if AutoBuyEnabled then
-		AutoHealEnabled = false
-		AutoHeal.TextLabel.Text = 'Disabled'
-	else
-		AutoHealEnabled = true
-		AutoHeal.TextLabel.Text = 'Enabled'
-	end
-end)
-
--- ESP/ Admin
-ESPAdmin.MouseButton1Click:Connect(function()
-	if not AddonsLaunched then
-		AddonsLaunched = true
-		loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
-		loadstring(game:HttpGet('http://impulse-hub.xyz/ImpulseIY',true))()
-		
-		ESPAdmin.TextLabel.Text = 'Launched'
-	end
-end)
+	print('Clicked')	
+end
