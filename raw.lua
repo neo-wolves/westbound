@@ -182,10 +182,13 @@ Buttons['Launch ESP/ Admin'].MouseButton1Click:Connect(function()
 end)
 
 Button['Instant Outlaw'].MouseButton1Click:Connect(function()
-	BreakWindow()
-	BreakWindow()
-	BreakWindow()
-	BreakWindow()
+	for _,Window in pairs(game.ReplicatedStorage.ContextStreaming:GetChildren()) do
+    if Window.Name == 'Window' and game.Players.LocalPlayer.TeamColor ~= BrickColor.New('Bright red') then
+        if Window.Part.Transparency == 0.5 then
+            game:GetService("ReplicatedStorage").GeneralEvents.WindowBreak:FireServer(Window)
+        end
+    end
+end
 end)
 
 StartLoop()
