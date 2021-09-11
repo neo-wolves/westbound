@@ -181,8 +181,11 @@ Buttons['Launch ESP/ Admin'].MouseButton1Click:Connect(function()
     	end
 end)
 
-Button['Instant Outlaw'].MouseButton1Click:Connect(function()
-	print('Clicked')
+Buttons['Instant Outlaw'].MouseButton1Click:Connect(function()
+	BreakWindow()
+	BreakWindow()
+	BreakWindow()
+	BreakWindow()
 end)
 
 StartLoop()
