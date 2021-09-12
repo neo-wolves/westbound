@@ -18,7 +18,7 @@ UILibrary.AddButton(Menu[1], 'Auto Buy/ Sell', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Auto Heal', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Launch ESP/ Admin', 'Launch')
 UILibrary.AddButton(Menu[1], 'Break Window', 'Break')
-UILibrary.AddButton(Menu[1], 'Shop Boxes', 'Diabled')
+UILibrary.AddButton(Menu[1], 'Shop Boxes', 'Disabled')
 local Buttons = {}
 local ShopBoxes = {}
 
