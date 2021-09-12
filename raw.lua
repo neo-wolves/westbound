@@ -30,6 +30,7 @@ for _,Frame in pairs(Menu[1]:GetChildren()) do
 end
 
 for _,Shop in pairs(workspace.Shops:GetChildren()) do
+	print(Shop)
     local Part = Instance.new('Part', Shop)
     Part.Anchored = true
     Part.Color = Color3.fromRGB(255, 0, 0)
