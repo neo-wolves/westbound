@@ -206,7 +206,7 @@ Buttons['Shop Boxes'].MouseButton1Click:Connect(function()
 				Part.Color = Color3.fromRGB(255, 0, 0)
 				Part.CanCollide = false
 				Part.Transparency = 0.9
-				Part.Size = Vector3.new(13, 13, 13)
+				Part.Size = Vector3.new(15, 15, 15)
 				Part.Position = Shop.Head.ShopPart.Position
 				Part.Rotation = Shop.Head.ShopPart.Rotation
 				table.insert(ShopBoxes, Part)
