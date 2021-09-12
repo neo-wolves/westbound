@@ -7,6 +7,7 @@ local AutoBuyEnabled = false
 local GodModeEnabled = false
 local AutoHealEnabled = false
 local AddonsLaunched = false
+local BoxesEnabled = false
 local CurrentShop = ''
 
 -- Create UI Elements
@@ -16,14 +17,29 @@ UILibrary.AddButton(Menu[1], 'Gun Mods', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Auto Buy/ Sell', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Auto Heal', 'Disabled')
 UILibrary.AddButton(Menu[1], 'Launch ESP/ Admin', 'Launch')
-UILibrary.AddButton(Menu[1], 'Instant Outlaw', 'Switch')
+UILibrary.AddButton(Menu[1], 'Break Window', 'Break')
+UILibrary.AddButton(Menu[1], 'Shop Boxes', 'Diabled')
 local Buttons = {}
+local ShopBoxes = {}
 
 for _,Frame in pairs(Menu[1]:GetChildren()) do
 	print(Frame)
 	if Frame:IsA('Frame') then
 		Buttons[Frame.TextLabel.Text] = Frame.ImageButton
 	end
+end
+
+for _,Shop in pairs(workspace.Shops:GetChildren()) do
+    local Part = Instance.new('Part', Shop)
+    Part.Anchored = true
+    Part.Color = Color3.fromRGB(255, 0, 0)
+    Part.CanCollide = false
+    Part.Transparency = 1
+    Part.Size = Vector3.new(13, 13, 13)
+    Part.Position = Shop.Head.ShopPart.Position
+    Part.Rotation = Shop.Head.ShopPart.Rotation
+    Part.Parent = Shop.Head.ShopPart
+    table.insert(ShopBoxes, Part)
 end
 
 -- Global Functions
@@ -181,11 +197,24 @@ Buttons['Launch ESP/ Admin'].MouseButton1Click:Connect(function()
     	end
 end)
 
-Buttons['Instant Outlaw'].MouseButton1Click:Connect(function()
+Buttons['Break Window'].MouseButton1Click:Connect(function()
 	BreakWindow()
-	BreakWindow()
-	BreakWindow()
-	BreakWindow()
+end)
+
+Buttons['Shop Boxes'].MouseButton1Click:Connect(function()
+	if BoxesEnabled then
+		BoxesEnabled = false
+		Buttons['Shop Boxes'].TextLabel.Text = 'Disabled'
+		for _,Box in pairs(ShopBoxes) do
+			Box.Transparency = 1
+		end
+	else
+		BoxesEnabled = true
+		Buttons['Shop Boxes'].TextLabel.Text = 'Enabled'
+		for _,Box in pairs(ShopBoxes) do
+			Box.Transparency = 0.85
+		end
+	end
 end)
 
 StartLoop()
