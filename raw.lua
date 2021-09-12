@@ -201,21 +201,20 @@ Buttons['Shop Boxes'].MouseButton1Click:Connect(function()
 		if not ShopBoxes[1] then
 			for _,Shop in pairs(workspace.Shops:GetChildren()) do
 				print(Shop)
-				local Part = Instance.new('Part', Shop)
+				local Part = Instance.new('Part')
 				Part.Anchored = true
 				Part.Color = Color3.fromRGB(255, 0, 0)
 				Part.CanCollide = false
-				Part.Transparency = 1
+				Part.Transparency = 0.9
 				Part.Size = Vector3.new(13, 13, 13)
 				Part.Position = Shop.Head.ShopPart.Position
 				Part.Rotation = Shop.Head.ShopPart.Rotation
-				Part.Parent = Shop.Head.ShopPart
 				table.insert(ShopBoxes, Part)
-				print(Part)
+				Part.Parent = Shop.Head.ShopPart
 			end
 		end
 		for _,Box in pairs(ShopBoxes) do
-			Box.Transparency = 0.85
+			Box.Transparency = 0.9
 		end
 	end
 end)
