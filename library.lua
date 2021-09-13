@@ -70,7 +70,7 @@ module.AddMenu = function()
 	TitleText.TextScaled = true
 	TitleText.TextStrokeTransparency = 0
 	TitleText.TextWrapped = true
-	TitleText.Text = 'Neo Wolves'
+	TitleText.Text = 'The Wolves'
 	TitleText.ZIndex = 3
 	
 	-- Create ScrollFrame for MainFrame
