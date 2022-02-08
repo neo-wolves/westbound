@@ -53,39 +53,6 @@ local function SetMods(Mods)
 	end
 end
 
-UserInputService.InputBegan:Connect(function(Input, GameProcessed)
-	if not GameProcessed then
-		if Input.KeyCode == Enum.KeyCode.Z then
-			print('Z')
-			if GodModeEnabled then
-				print('Ungodded')
-				GodModeEnabled = false
-				Menu[2].Text = 'Ungodded'
-				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
-			else
-				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
-
-				if game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
-					print('Godded')
-					GodModeEnabled = true
-					Menu[2].Text = 'Godded'
-
-					game.Players.LocalPlayer.Character.ForceField.Visible = false
-					Player.StateConfig:WaitForChild('CharacterDisabled').Value = false
-					
-					Menu[2].Text = 'Ungodded'
-				else
-					Menu[2].Text = 'No Shop Nearby'
-
-					wait(1.5)
-
-					Menu[2].Text = 'Ungodded'
-				end
-			end
-		end
-	end
-end)
-
 -- Element Functions
 Buttons['Gun Mods'].MouseButton1Click:Connect(function()
 	local Mods = {
@@ -195,6 +162,39 @@ Player.CharacterAdded:Connect(function()
 		Menu[2].Text = 'Ungodded'
 		GodModeEnabled = false
 	end)
+end)
+
+UserInputService.InputBegan:Connect(function(Input, GameProcessed)
+	if not GameProcessed then
+		if Input.KeyCode == Enum.KeyCode.Z then
+			print('Z')
+			if GodModeEnabled then
+				print('Ungodded')
+				GodModeEnabled = false
+				Menu[2].Text = 'Ungodded'
+				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
+			else
+				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
+
+				if game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
+					print('Godded')
+					GodModeEnabled = true
+					Menu[2].Text = 'Godded'
+
+					game.Players.LocalPlayer.Character.ForceField.Visible = false
+					Player.StateConfig:WaitForChild('CharacterDisabled').Value = false
+
+					Menu[2].Text = 'Ungodded'
+				else
+					Menu[2].Text = 'No Shop Nearby'
+
+					wait(1.5)
+
+					Menu[2].Text = 'Ungodded'
+				end
+			end
+		end
+	end
 end)
 
 -- Loop
