@@ -56,7 +56,9 @@ end
 UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 	if not GameProcessed then
 		if Input.KeyCode == Enum.KeyCode.Z then
+			print('Z')
 			if GodModeEnabled then
+				print('Ungodded')
 				GodModeEnabled = false
 				Menu[2].Text = 'Ungodded'
 				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
@@ -64,6 +66,7 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
 
 				if game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
+					print('Godded')
 					GodModeEnabled = true
 					Menu[2].Text = 'Godded'
 
