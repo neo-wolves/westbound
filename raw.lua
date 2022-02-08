@@ -1,6 +1,7 @@
 -- Variables
 local Players = game:GetService('Players')
 local UserInputService = game:GetService('UserInputService')
+local RunService = game:GetService('RunService')
 local Player = Players.LocalPlayer
 
 local AutoBuyEnabled = false
@@ -29,41 +30,66 @@ for _,Frame in pairs(Menu[1]:GetChildren()) do
 	end
 end
 
+-- Forced Movement
+RunService.RenderStepped:Connect(function()
+    local Humanoid = Player.Character:FindFirstChild('Humanoid')
+   	if Humanoid then
+   	    local X, Z = 0, 0
+   	    
+        if UserInputService:IsKeyDown(W) then
+            Z = -1
+        end
+        
+        if UserInputService:IsKeyDown(A) then
+            X = -1
+        end
+        
+        if UserInputService:IsKeyDown(S) then
+            Z = 1
+        end
+        
+        if UserInputService:IsKeyDown(D) then
+            X = 1
+        end
+        
+        Humanoid:Move(Vector3.new(X, 0, Z), true)
+    end
+end)
+
 -- Global Functions
 local function StartLoop()
-	while wait(0.15) do
-		if AutoBuyEnabled then
+	spawn(function()
+		while wait(0.15) do
+			if AutoBuyEnabled then
+				for _,Shop in pairs(workspace.Shops:GetChildren()) do
+					local Magnitude = (Shop.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).Magnitude
+					if CurrentShop ~= Shop.Name and Magnitude <= 15 then
+						CurrentShop = Shop.Name
+						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("PistolAmmo",true)
+						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("RifleAmmo",true)
+						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("ShotgunAmmo",true)
+						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Dynamite",true)
+						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("SniperAmmo",true)
+						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
+						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Health Potion",true)
+						game:GetService("ReplicatedStorage").GeneralEvents.Inventory:InvokeServer("Sell")
+					elseif CurrentShop == Shop.Name and Magnitude > 15 then
+						CurrentShop = ''
+					end
+				end
+			end
 
-			for _,Shop in pairs(workspace.Shops:GetChildren()) do
-				local Magnitude = (Shop.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).Magnitude
+			if AutoHealEnabled then
+				local Character = workspace:FindFirstChild(Player.Name)
 
-				if CurrentShop ~= Shop.Name and Magnitude <= 15 then
-					CurrentShop = Shop.Name
-
-					game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("PistolAmmo",true)
-					game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("RifleAmmo",true)
-					game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("ShotgunAmmo",true)
-					game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Dynamite",true)
-					game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("SniperAmmo",true)
-					game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
-					game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Health Potion",true)
-					game:GetService("ReplicatedStorage").GeneralEvents.Inventory:InvokeServer("Sell")
-				elseif CurrentShop == Shop.Name and Magnitude > 15 then
-					CurrentShop = ''
+				if Character then
+					if Character.Humanoid.Health <= 35 and Character.Humanoid.Health > 0 then
+						game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
+					end
 				end
 			end
 		end
-
-		if AutoHealEnabled then
-			local Character = workspace:FindFirstChild(Player.Name)
-
-			if Character then
-				if Character.Humanoid.Health <= 35 and Character.Humanoid.Health > 0 then
-					game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
-				end
-			end
-		end
-	end
+	end)
 end
 
 local function BreakWindow()
@@ -185,7 +211,16 @@ Buttons['Launch ESP/ Admin'].MouseButton1Click:Connect(function()
 end)
 
 Buttons['Break Window'].MouseButton1Click:Connect(function()
-	BreakWindow()
+	spawn(function()
+		BreakWindow()
+		wait(0.1)
+		BreakWindow()
+		wait(0.1)
+		BreakWindow()
+		wait(0.1)
+		BreakWindow()
+		wait(0.1)
+	end)
 end)
 
 Buttons['Shop Boxes'].MouseButton1Click:Connect(function()
