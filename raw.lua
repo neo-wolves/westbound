@@ -27,34 +27,10 @@ for _,Frame in pairs(Menu[1]:GetChildren()) do
 	print(Frame)
 	if Frame:IsA('Frame') then
 		Buttons[Frame.TextLabel.Text] = Frame.ImageButton
-	end
+end
 end
 
 -- Forced Movement
-RunService.RenderStepped:Connect(function()
-    local Humanoid = Player.Character:FindFirstChild('Humanoid')
-   	if Humanoid then
-   	    local X, Z = 0, 0
-   	    
-        if UserInputService:IsKeyDown(W) then
-            Z = -1
-        end
-        
-        if UserInputService:IsKeyDown(A) then
-            X = -1
-        end
-        
-        if UserInputService:IsKeyDown(S) then
-            Z = 1
-        end
-        
-        if UserInputService:IsKeyDown(D) then
-            X = 1
-        end
-        
-        Humanoid:Move(Vector3.new(X, 0, Z), true)
-    end
-end)
 
 -- Global Functions
 local function StartLoop()
