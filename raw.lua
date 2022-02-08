@@ -23,10 +23,7 @@ UILibrary.AddButton(Menu[1], 'Shop Boxes', 'Disabled')
 local Buttons = {}
 local ShopBoxes = {}
 
-print('Line 26')
-
 for _,Frame in pairs(Menu[1]:GetChildren()) do
-	print(Frame)
 	if Frame:IsA('Frame') then
 		Buttons[Frame.TextLabel.Text] = Frame.ImageButton
 	end
@@ -128,7 +125,6 @@ Buttons['Shop Boxes'].MouseButton1Click:Connect(function()
 		Buttons['Shop Boxes'].TextLabel.Text = 'Enabled'
 		if not ShopBoxes[1] then
 			for _,Shop in pairs(workspace.Shops:GetChildren()) do
-				print(Shop)
 				local Part = Instance.new('Part')
 				Part.Anchored = true
 				Part.Color = Color3.fromRGB(255, 0, 0)
@@ -167,9 +163,7 @@ end)
 UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 	if not GameProcessed then
 		if Input.KeyCode == Enum.KeyCode.Z then
-			print('Z')
 			if GodModeEnabled then
-				print('Ungodded')
 				GodModeEnabled = false
 				Menu[2].Text = 'Ungodded'
 				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
@@ -177,14 +171,11 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
 
 				if game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
-					print('Godded')
 					GodModeEnabled = true
 					Menu[2].Text = 'Godded'
 
 					game.Players.LocalPlayer.Character.ForceField.Visible = false
 					Player.StateConfig:WaitForChild('CharacterDisabled').Value = false
-
-					Menu[2].Text = 'Ungodded'
 				else
 					Menu[2].Text = 'No Shop Nearby'
 
@@ -198,9 +189,6 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 end)
 
 -- Loop
-
-print('Line 198')
-
 RunService.RenderStepped:Connect(function()
 	local Humanoid = Player.Character:FindFirstChild('Humanoid')
 	if Humanoid then
@@ -257,7 +245,7 @@ RunService.RenderStepped:Connect(function()
 	if GodModeEnabled then
 		if not game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
 			
-			wait(1)
+			wait(0.2)
 			
 			if not game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
 				GodModeEnabled = false
@@ -266,8 +254,6 @@ RunService.RenderStepped:Connect(function()
 		end
 	end
 end)
-
-print('Line 261')
 
 UserInputService.InputBegan:Connect(function(Input)
 	if Input.KeyCode == Enum.KeyCode.Space then
