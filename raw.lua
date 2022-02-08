@@ -256,8 +256,13 @@ RunService.RenderStepped:Connect(function()
 
 	if GodModeEnabled then
 		if not game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
-			GodModeEnabled = false
-			Menu[2].Text = 'Ungodded'
+			
+			wait(1)
+			
+			if not game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
+				GodModeEnabled = false
+				Menu[2].Text = 'Ungodded'
+			end
 		end
 	end
 end)
