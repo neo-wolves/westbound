@@ -27,43 +27,90 @@ for _,Frame in pairs(Menu[1]:GetChildren()) do
 	print(Frame)
 	if Frame:IsA('Frame') then
 		Buttons[Frame.TextLabel.Text] = Frame.ImageButton
-end
+	end
 end
 
 -- Forced Movement
+local RunService = game:GetService('RunService')
+local UserInputService = game:GetService('UserInputService')
+
+local Player = game.Players.LocalPlayer
+
+RunService.RenderStepped:Connect(function()
+    local Humanoid = Player.Character:FindFirstChild('Humanoid')
+       if Humanoid then
+        local X, Z = 0, 0
+           
+        if UserInputService:IsKeyDown(Enum.KeyCode.W) then
+            Z = -1
+        end
+        
+        if UserInputService:IsKeyDown(Enum.KeyCode.A) then
+            X = -1
+        end
+        
+        if UserInputService:IsKeyDown(Enum.KeyCode.S) then
+            Z = 1
+        end
+            
+        if UserInputService:IsKeyDown(Enum.KeyCode.D) then
+            X = 1
+        end
+        
+        Humanoid:Move(Vector3.new(X, 0, Z), true)
+    end
+		
+	if AutoBuyEnabled then
+		for _,Shop in pairs(workspace.Shops:GetChildren()) do
+			local Magnitude = (Shop.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).Magnitude
+			if CurrentShop ~= Shop.Name and Magnitude <= 15 then
+				CurrentShop = Shop.Name
+				game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("PistolAmmo",true)
+				game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("RifleAmmo",true)
+				game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("ShotgunAmmo",true)
+				game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Dynamite",true)
+				game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("SniperAmmo",true)
+				game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
+				game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Health Potion",true)
+				game:GetService("ReplicatedStorage").GeneralEvents.Inventory:InvokeServer("Sell")
+			elseif CurrentShop == Shop.Name and Magnitude > 15 then
+				CurrentShop = ''
+			end
+		end
+	end
+
+	if AutoHealEnabled then
+		local Character = workspace:FindFirstChild(Player.Name)
+
+		if Character then
+			if Character.Humanoid.Health <= 35 and Character.Humanoid.Health > 0 then
+				game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
+			end
+		end
+	end
+		
+	if GodModeEnabled then
+		if not game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
+			GodModeEnabled = false
+			Menu[2].Text = 'Ungodded'
+		end
+	end
+end)
+
+UserInputService.InputBegan:Connect(function(Input)
+    if Input.KeyCode == Enum.KeyCode.Space then
+        local Humanoid = Player.Character:FindFirstChild('Humanoid')
+        if Humanoid then
+            Humanoid.Jump = true
+        end
+    end
+end)
 
 -- Global Functions
 local function StartLoop()
 	spawn(function()
 		while wait(0.15) do
-			if AutoBuyEnabled then
-				for _,Shop in pairs(workspace.Shops:GetChildren()) do
-					local Magnitude = (Shop.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).Magnitude
-					if CurrentShop ~= Shop.Name and Magnitude <= 15 then
-						CurrentShop = Shop.Name
-						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("PistolAmmo",true)
-						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("RifleAmmo",true)
-						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("ShotgunAmmo",true)
-						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Dynamite",true)
-						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("SniperAmmo",true)
-						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("BIG Dynamite",true)
-						game:GetService("ReplicatedStorage").GeneralEvents.BuyItem:InvokeServer("Health Potion",true)
-						game:GetService("ReplicatedStorage").GeneralEvents.Inventory:InvokeServer("Sell")
-					elseif CurrentShop == Shop.Name and Magnitude > 15 then
-						CurrentShop = ''
-					end
-				end
-			end
-
-			if AutoHealEnabled then
-				local Character = workspace:FindFirstChild(Player.Name)
-
-				if Character then
-					if Character.Humanoid.Health <= 35 and Character.Humanoid.Health > 0 then
-						game:GetService("Players").LocalPlayer.Backpack["Health Potion"].DrinkPotion:InvokeServer()
-					end
-				end
-			end
+			
 		end
 	end)
 end
@@ -123,7 +170,11 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 					GodModeEnabled = true
 					Menu[2].Text = 'Godded'
 
-					game.Players.LocalPlayer.Character.ForceField.Visible = true
+					game.Players.LocalPlayer.Character.ForceField.Visible = false
+					Player.StateConfig:WaitForChild('CharacterDisabled').Value = false
+					Player.Character.Humanoid.Died:Connect(function()
+						Menu[2].Text = 'Ungodded'
+					end
 				else
 					Menu[2].Text = 'No Shop Nearby'
 
