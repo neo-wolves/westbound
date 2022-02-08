@@ -123,7 +123,7 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 					GodModeEnabled = true
 					Menu[2].Text = 'Godded'
 
-					game.Players.LocalPlayer.Character.ForceField.Visible = false
+					game.Players.LocalPlayer.Character.ForceField.Visible = true
 				else
 					Menu[2].Text = 'No Shop Nearby'
 
