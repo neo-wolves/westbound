@@ -31,35 +31,30 @@ for _,Frame in pairs(Menu[1]:GetChildren()) do
 end
 
 -- Forced Movement
-local RunService = game:GetService('RunService')
-local UserInputService = game:GetService('UserInputService')
-
-local Player = game.Players.LocalPlayer
-
 RunService.RenderStepped:Connect(function()
-    local Humanoid = Player.Character:FindFirstChild('Humanoid')
-       if Humanoid then
-        local X, Z = 0, 0
-           
-        if UserInputService:IsKeyDown(Enum.KeyCode.W) then
-            Z = -1
-        end
-        
-        if UserInputService:IsKeyDown(Enum.KeyCode.A) then
-            X = -1
-        end
-        
-        if UserInputService:IsKeyDown(Enum.KeyCode.S) then
-            Z = 1
-        end
-            
-        if UserInputService:IsKeyDown(Enum.KeyCode.D) then
-            X = 1
-        end
-        
-        Humanoid:Move(Vector3.new(X, 0, Z), true)
-    end
-		
+	local Humanoid = Player.Character:FindFirstChild('Humanoid')
+	if Humanoid then
+		local X, Z = 0, 0
+
+		if UserInputService:IsKeyDown(Enum.KeyCode.W) then
+			Z = -1
+		end
+
+		if UserInputService:IsKeyDown(Enum.KeyCode.A) then
+			X = -1
+		end
+
+		if UserInputService:IsKeyDown(Enum.KeyCode.S) then
+			Z = 1
+		end
+
+		if UserInputService:IsKeyDown(Enum.KeyCode.D) then
+			X = 1
+		end
+
+		Humanoid:Move(Vector3.new(X, 0, Z), true)
+	end
+
 	if AutoBuyEnabled then
 		for _,Shop in pairs(workspace.Shops:GetChildren()) do
 			local Magnitude = (Shop.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).Magnitude
@@ -88,7 +83,7 @@ RunService.RenderStepped:Connect(function()
 			end
 		end
 	end
-		
+
 	if GodModeEnabled then
 		if not game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
 			GodModeEnabled = false
@@ -98,30 +93,30 @@ RunService.RenderStepped:Connect(function()
 end)
 
 UserInputService.InputBegan:Connect(function(Input)
-    if Input.KeyCode == Enum.KeyCode.Space then
-        local Humanoid = Player.Character:FindFirstChild('Humanoid')
-        if Humanoid then
-            Humanoid.Jump = true
-        end
-    end
+	if Input.KeyCode == Enum.KeyCode.Space then
+		local Humanoid = Player.Character:FindFirstChild('Humanoid')
+		if Humanoid then
+			Humanoid.Jump = true
+		end
+	end
 end)
 
 -- Global Functions
 local function StartLoop()
 	spawn(function()
 		while wait(0.15) do
-			
+
 		end
 	end)
 end
 
 local function BreakWindow()
 	for _,Window in pairs(game.ReplicatedStorage.ContextStreaming:GetChildren()) do
-    		if Window.Name == 'Window' and game.Players.LocalPlayer.TeamColor ~= BrickColor.New('Bright red') then
-        		if Window.Part.Transparency == 0.5 then
-            			game:GetService("ReplicatedStorage").GeneralEvents.WindowBreak:FireServer(Window)
-        		end
-    		end
+		if Window.Name == 'Window' and game.Players.LocalPlayer.TeamColor ~= BrickColor.New('Bright red') then
+			if Window.Part.Transparency == 0.5 then
+				game:GetService("ReplicatedStorage").GeneralEvents.WindowBreak:FireServer(Window)
+			end
+		end
 	end
 end
 
@@ -174,7 +169,10 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 					Player.StateConfig:WaitForChild('CharacterDisabled').Value = false
 					Player.Character.Humanoid.Died:Connect(function()
 						Menu[2].Text = 'Ungodded'
-					end
+						GodModeEnabled = false
+					end)
+					
+					Menu[2].Text = 'Ungodded'
 				else
 					Menu[2].Text = 'No Shop Nearby'
 
@@ -200,31 +198,31 @@ Buttons['Gun Mods'].MouseButton1Click:Connect(function()
 		HipFireAccuracy = 0, 
 		ZoomAccuracy = 0, 
 		InstantFireAnimation = true
-    	}
-    
-    	SetMods(Mods)
-    
-    	Buttons['Gun Mods'].TextLabel.Text = 'Enabled'
+	}
+
+	SetMods(Mods)
+
+	Buttons['Gun Mods'].TextLabel.Text = 'Enabled'
 end)
 
 Buttons['Auto Buy/ Sell'].MouseButton1Click:Connect(function()
 	if AutoBuyEnabled then
 		AutoBuyEnabled = false
 		Buttons['Auto Buy/ Sell'].TextLabel.Text = 'Disabled'
-    	else
+	else
 		AutoBuyEnabled = true
 		Buttons['Auto Buy/ Sell'].TextLabel.Text = 'Enabled'
-    	end	
+	end	
 end)
-		
+
 Buttons['Auto Heal'].MouseButton1Click:Connect(function()
 	if AutoHealEnabled then
 		AutoHealEnabled = false
 		Buttons['Auto Heal'].TextLabel.Text = 'Disabled'
-    	else
+	else
 		AutoHealEnabled = true
 		Buttons['Auto Heal'].TextLabel.Text = 'Enabled'
-    	end			
+	end			
 end)
 
 Buttons['Launch ESP/ Admin'].MouseButton1Click:Connect(function()
@@ -234,7 +232,7 @@ Buttons['Launch ESP/ Admin'].MouseButton1Click:Connect(function()
 		loadstring(game:HttpGet('http://impulse-hub.xyz/ImpulseIY',true))()
 
 		Buttons['Launch ESP/ Admin'].TextLabel.Text = 'Launched'
-    	end
+	end
 end)
 
 Buttons['Break Window'].MouseButton1Click:Connect(function()
