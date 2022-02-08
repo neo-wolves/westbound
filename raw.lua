@@ -69,10 +69,6 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 
 					game.Players.LocalPlayer.Character.ForceField.Visible = false
 					Player.StateConfig:WaitForChild('CharacterDisabled').Value = false
-					Player.Character.Humanoid.Died:Connect(function()
-						Menu[2].Text = 'Ungodded'
-						GodModeEnabled = false
-					end)
 					
 					Menu[2].Text = 'Ungodded'
 				else
@@ -191,6 +187,11 @@ Player.CharacterAdded:Connect(function()
 	Menu[2].Text = 'Ungodded'
 
 	game.Players.LocalPlayer.Character.Head.NameTag:Destroy()
+	
+	Player.Character.Humanoid.Died:Connect(function()
+		Menu[2].Text = 'Ungodded'
+		GodModeEnabled = false
+	end)
 end)
 
 -- Loop
