@@ -168,7 +168,6 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessed)
 				Menu[2].Text = 'Ungodded'
 				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", false)
 			else
-				Player.Character.HumanoidRootPart.Position = workspace.Shops.Gunsmith1.Head.ShopPart.Position
 				game:GetService("ReplicatedStorage").GeneralEvents.CustomizeCharacter:InvokeServer("Shopping", true)
 
 				if game.Players.LocalPlayer.Character:FindFirstChild('ForceField') then
